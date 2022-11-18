@@ -9,9 +9,12 @@ public class APCalendar {
      * isLeapYear(2016) returns True
      */          
     public static boolean isLeapYear(int year) {
-        // implementation not shown
-
-        return false;
+        if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {
+            return true;
+        }
+        else {
+            return false;
+        }
         }
         
     /** Returns the value representing the day of the week 
@@ -21,9 +24,10 @@ public class APCalendar {
      * firstDayOfYear(2019) returns 2 for Tuesday.
     */
     private static int firstDayOfYear(int year) {
-        // implementation not shown
-
-        return 0;
+        if (year > 1752) {
+            return (year + numberOfLeapYears(1, year - 1))%7;
+        }
+        return (year + (year-1)/4 + 5)%7;
         }
 
 
@@ -34,9 +38,20 @@ public class APCalendar {
      * dayOfYear(3, 1, 2016) returns 61, since 2016 is a leap year. 
     */ 
     private static int dayOfYear(int month, int day, int year) {
-        // implementation not shown
-
-        return 1;
+        int count = 0;
+        if (month < 8) {
+            count = 31*((month)/2) + 30*((month-1)/2) + day;
+        } else {
+            count = 214 + 31*((month-7)/2) + 30*((month-8)/2) + day;
+        }
+        if (month > 2) {
+            if (!isLeapYear(year)) {
+                count = count - 2;
+            } else {
+                count--;
+            }
+        }
+        return count;
         }
 
     /** Returns the number of leap years between year1 and year2, inclusive.
@@ -44,17 +59,23 @@ public class APCalendar {
     */ 
     public static int numberOfLeapYears(int year1, int year2) {
          // to be implemented in part (a)
-
-        return 0;
+        int count = 0;
+        for (int i = year1; i <= year2; i++) {
+            if (APCalendar.isLeapYear(i)) {
+                count++;
+            }
         }
+        return count;
+    }
 
     /** Returns the value representing the day of the week for the given date
      * Precondition: The date represented by month, day, year is a valid date.
     */
     public static int dayOfWeek(int month, int day, int year) { 
+
         // to be implemented in part (b)
-        return 0;
-        }
+        return (firstDayOfYear(year) + dayOfYear(month, day, year) - 1) % 7;
+        } 
 
     /** Tester method */
     public static void main(String[] args) {
