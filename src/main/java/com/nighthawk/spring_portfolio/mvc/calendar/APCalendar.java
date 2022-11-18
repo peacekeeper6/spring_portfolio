@@ -24,9 +24,6 @@ public class APCalendar {
      * firstDayOfYear(2019) returns 2 for Tuesday.
     */
     private static int firstDayOfYear(int year) {
-        if (year > 1752) {
-            return (year + numberOfLeapYears(1, year - 1))%7;
-        }
         return (year + (year-1)/4 + 5)%7;
         }
 
