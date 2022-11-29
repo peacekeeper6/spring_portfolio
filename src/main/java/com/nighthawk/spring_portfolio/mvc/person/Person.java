@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
@@ -63,7 +64,12 @@ public class Person {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
-    
+
+    @Positive
+    private Integer bmi;
+
+    @Positive
+    private Integer goalStep;
 
     /* HashMap is used to store JSON for daily "stats"
     "stats": {
@@ -79,11 +85,13 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, Date dob) {
+    public Person(String email, String password, String name, Date dob, Integer bmi) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.dob = dob;
+        this.bmi = bmi;
+        this.goalStep = bmi*225;
     }
 
     // A custom getter to return age from dob attribute
@@ -92,6 +100,17 @@ public class Person {
             LocalDate birthDay = this.dob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             return Period.between(birthDay, LocalDate.now()).getYears(); }
         return -1;
+    }
+
+    public String toString() {
+        return ( "{ \"name\": "  +this.name+  ", " + "\"email\": "  +this.email+  ", " + "\"password\": "  +this.password+  ", " + "\"dateOfBirth\": "  +this.dob+  ", " + "\"age\": "  +this.getAge()+ ", " + "\"bmi\": "  +this.bmi+ ", " + "\"stepgoal\": "  +this.goalStep+ " }" );
+    }
+
+    public static void main(String[] args) {
+        Person p0 = new Person();
+        Person p1 = new Person("junlim954@gmail.com", "password", "Junseo Lim", new java.util.GregorianCalendar(2005, 3, 3).getTime(), 21);
+        System.out.println(p0);
+        System.out.println(p1);
     }
 
 }
