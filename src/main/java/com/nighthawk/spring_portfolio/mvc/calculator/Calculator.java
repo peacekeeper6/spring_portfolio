@@ -262,16 +262,16 @@ public class Calculator {
         this.result = calcStack.pop();
     }
 
-    public String calcToString(boolean x) {
-        if (x) {
-        System.out.println("--------");
-        System.out.println("Result: " + this.expression + " = " + this.result);
-        System.out.println("Tokens: " + this.tokens + " , RPN: " + this.reverse_polish);
-        }
+    // public String calcToString(boolean x) {
+    //     if (x) {
+    //     System.out.println("--------");
+    //     System.out.println("Result: " + this.expression + " = " + this.result);
+    //     System.out.println("Tokens: " + this.tokens + " , RPN: " + this.reverse_polish);
+    //     }
 
-        String output = this.expression + " = " + this.result;
-        return output;
-    }
+    //     String output = this.expression + " = " + this.result;
+    //     return output;
+    // }
 
     public String jsonify() {
         String json = "{ \"Original Expression\": \"" + this.expression + "\", \"Tokenized Expression\": \"" + this.tokens + "\", \"Reverse Polish Notation\": \"" + this.reverse_polish + "\", \"Final Result\": " + this.result + " }";
