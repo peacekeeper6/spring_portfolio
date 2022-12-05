@@ -173,7 +173,7 @@ public class Calculator {
                 case "pi":
                 case "Pi":
                 case "PI":
-                    this.reverse_polish.add("3.141592653589793238");
+                    this.reverse_polish.add("3.14159265358979");
                     break;
                 default: 
                     try
@@ -306,6 +306,11 @@ public class Calculator {
 
         Calculator rootMath = new Calculator("2 SQRT 3");
         System.out.println("Square Root Math\n" + rootMath);
+
+        System.out.println();
+
+        Calculator piMath = new Calculator("2 * pi");
+        System.out.println("Pi Math\n" + piMath);
     }
     
 }
