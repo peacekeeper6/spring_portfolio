@@ -14,12 +14,13 @@ public class CalculatorAPIController {
 
     @GetMapping("/{expression}")
     public ResponseEntity<String> getResult(@PathVariable String expression) {
-
-        // Returns jsonified result of expression with tokens and everything
+        try {
         Calculator a = new Calculator(expression);
-        String result = a.jsonify();
+        String result = a.toString();
         if (result != null) {
             return new ResponseEntity<String>(result, HttpStatus.OK);
+        }} catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
         // Bad ID

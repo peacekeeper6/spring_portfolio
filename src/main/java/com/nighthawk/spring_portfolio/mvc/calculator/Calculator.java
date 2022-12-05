@@ -262,20 +262,45 @@ public class Calculator {
         this.result = calcStack.pop();
     }
 
-    // public String calcToString(boolean x) {
-    //     if (x) {
-    //     System.out.println("--------");
-    //     System.out.println("Result: " + this.expression + " = " + this.result);
-    //     System.out.println("Tokens: " + this.tokens + " , RPN: " + this.reverse_polish);
-    //     }
+    public String toString() {
+        return ("Original expression: " + this.expression + "\n" +
+                "Tokenized expression: " + this.tokens.toString() + "\n" +
+                "Reverse Polish Notation: " + this.reverse_polish.toString() + "\n" +
+                "Final result: " + String.format("%.2f", this.result));
+    }
 
-    //     String output = this.expression + " = " + this.result;
-    //     return output;
-    // }
+    public static void main(String[] args) {
+        Calculator simpleMath = new Calculator("100 + 210  * 6");
+        System.out.println("Simple Math\n" + simpleMath);
 
-    public String jsonify() {
-        String json = "{ \"Original Expression\": \"" + this.expression + "\", \"Tokenized Expression\": \"" + this.tokens + "\", \"Reverse Polish Notation\": \"" + this.reverse_polish + "\", \"Final Result\": " + this.result + " }";
-        return json;
+        System.out.println();
+
+        Calculator parenthesisMath = new Calculator("(100 + 34)  * 3");
+        System.out.println("Parenthesis Math\n" + parenthesisMath);
+
+        System.out.println();
+
+        Calculator decimalMath = new Calculator("1010.2 - 913.3");
+        System.out.println("Decimal Math\n" + decimalMath);
+
+        System.out.println();
+
+        Calculator moduloMath = new Calculator("700 % 200");
+        System.out.println("Modulo Math\n" + moduloMath);
+
+        System.out.println();
+
+        Calculator divisionMath = new Calculator("300/34");
+        System.out.println("Division Math\n" + divisionMath);
+
+        System.out.println();
+
+        Calculator powerMath = new Calculator("2 POWER 8");
+        System.out.println("Power Math\n" + powerMath);
+
+        System.out.println();
+
+        Calculator parenthesesError = new Calculator("((100+200)*3");
     }
     
 }
