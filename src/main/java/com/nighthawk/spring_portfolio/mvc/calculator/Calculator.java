@@ -240,7 +240,7 @@ public class Calculator {
                         result = Math.pow(a,b);
                         break;
                     case "SQRT":
-                        result = Math.pow(b, 1/a);
+                        result = Math.pow(b,1/a);
                         break;
                     default:
                         break;
@@ -301,6 +301,11 @@ public class Calculator {
         System.out.println();
 
         Calculator parenthesesError = new Calculator("((100+200)*3");
+
+        System.out.println();
+
+        Calculator rootMath = new Calculator("2 SQRT 3");
+        System.out.println("Square Root Math\n" + rootMath);
     }
     
 }
