@@ -34,33 +34,27 @@ public class LightBoard {
 		return outString;
     }
 
-    /* Output is intended for Terminal, effects added to output */
     public String toTerminal() { 
         String outString = "[";
-        // 2D array nested loops, used for reference
         for (int row = 0; row < lights.length; row++) {
             for (int col = 0; col < lights[row].length; col++) {
                 outString += 
-                // reset
                 "\033[m" +
-
-                // color
                 "\033[38;2;" + 
-                lights[row][col].getRed() + ";" +  // set color using getters
+                lights[row][col].getRed() + ";" +
                 lights[row][col].getGreen() + ";" +
                 lights[row][col].getBlue() + ";" +
                 lights[row][col].getEffect() + "m" +
-                // data, extract custom getters
                 "{" +
+                "\"" + "isOn\": " + lights[row][col].isOn() +
+                "," +
                 "\"" + "RGB\": " + "\"" + lights[row][col].getRGB() + "\"" +
                 "," +
                 "\"" + "Effect\": " + "\"" + lights[row][col].getEffectTitle() + "\"" +
                 "}," +
-                // newline
                 "\n" ;
             }
         }
-        // remove last comma, newline, add square bracket, reset color
         outString = outString.substring(0,outString.length() - 2) + "\033[m" + "]";
 		return outString;
     }
@@ -82,6 +76,7 @@ public class LightBoard {
                     // repeat each column for block size
                     for (int j = 0; j < COLS; j++) {
                         // print single character, except at midpoint print color code
+                        if (lights[row][col].isOn()) {
                         String c = (i == (int) (ROWS / 2) && j == (int) (COLS / 2) ) 
                             ? lights[row][col].getRGB()
                             : (j == (int) (COLS / 2))  // nested ternary
@@ -104,6 +99,7 @@ public class LightBoard {
 
                         // reset
                         "\033[m";
+                        }
                     }
                 }
                 outString += "\n";
@@ -114,11 +110,43 @@ public class LightBoard {
 		return outString;
     }
 
+    public void toggleLight(int row, int col) {
+        if (lights[row][col].isOn()) {
+            lights[row][col].setOn(false);
+        }
+        else {
+            lights[row][col].setOn(true);
+        }
+        System.out.println("Light " + row + ", " + col + " is now " + lights[row][col].isOn());
+    }
+
+    public void toggleAllOn() {
+        for (int i = 0; i < lights.length; i++) {
+            for (int j = 0; j < lights[i].length; j++) {
+                lights[i][j].setOn(true);
+            }
+        }
+        System.out.println("All lights set on");
+    }
+
+    public void toggleAllOff() {
+        for (int i = 0; i < lights.length; i++) {
+            for (int j = 0; j < lights[i].length; j++) {
+                lights[i][j].setOn(false);
+            }
+        }
+        System.out.println("All lights set off");
+    }
+
     static public void main(String[] args) {
-        // create and display LightBoard
         LightBoard lightBoard = new LightBoard(5, 5);
-        System.out.println(lightBoard);  // use toString() method
-        System.out.println(lightBoard.toTerminal());
+        //System.out.println(lightBoard);
+        //System.out.println(lightBoard.toTerminal());
+        lightBoard.toggleAllOn();
+        System.out.println(lightBoard.toColorPalette());
+        lightBoard.toggleAllOff();
+        System.out.println(lightBoard.toColorPalette());
+        lightBoard.toggleLight(4, 4);
         System.out.println(lightBoard.toColorPalette());
     }
 }
